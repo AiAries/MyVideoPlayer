@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--旅行, 搞笑, 明星-->
+    <item android:title="旅行" android:id="@+id/lvXin">
+
+    </item>
+    <item android:title="搞笑" android:id="@+id/fan">
+
+    </item>
+    <item android:title="明星" android:id="@+id/mingXin">
+
+    </item>
+</menu>
