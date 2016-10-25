@@ -30,11 +30,15 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
         this.bigNewses = bigNewses;
     }
 
-    private  List<VideoInfo> bigNewses;
+    private List<VideoInfo> bigNewses;
+    private IPlayerVideoCallBack playerVideoCallBack;
 
 
     public VideoInfoRecyclerAdapter(Context context, List<VideoInfo> bigNewses) {
 
+        if (context instanceof IPlayerVideoCallBack) {
+            playerVideoCallBack = (IPlayerVideoCallBack) context;
+        }
         this.context = context;
         this.bigNewses = bigNewses;
     }
@@ -43,17 +47,24 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         //确定展示条目的布局
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View itemView = inflater.inflate(R.layout.item_list_pic,parent,false );
+        View itemView = inflater.inflate(R.layout.item_list_pic, parent, false);
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         //给itemView绑定数据
-        VideoInfo bigNews = bigNewses.get(position);
+        final VideoInfo bigNews = bigNewses.get(position);
         Glide.with(context)
                 .load(bigNews.getCover_pic()).centerCrop()
                 .into(holder.iv);
+        holder.iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+                playerVideoCallBack.play(url/*bigNews.getUrl()*/);
+            }
+        });
         Glide.with(context)
                 .load(bigNews.getAvatar()).centerCrop()
                 .into(holder.header);

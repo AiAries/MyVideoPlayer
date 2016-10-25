@@ -26,11 +26,18 @@
                android:layout_width="match_parent"
                android:layout_height="180dp"
                />
+           <android.support.v4.widget.SwipeRefreshLayout
+                   android:id="@+id/sr"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+
+           </android.support.v4.widget.SwipeRefreshLayout>
            <android.support.v7.widget.RecyclerView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:id="@+id/rv"
-               />
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/rv"
+                   />
+
        </LinearLayout>
     </ScrollView>
 
