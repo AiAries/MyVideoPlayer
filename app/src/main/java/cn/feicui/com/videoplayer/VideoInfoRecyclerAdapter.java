@@ -14,6 +14,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.feicui.com.videoplayer.data.VideoInfo;
 
 /**
  * Created by Administrator on 2016/9/27 0027.
@@ -21,9 +22,10 @@ import butterknife.ButterKnife;
 public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecyclerAdapter.MyViewHolder> {
 
     private final Context context;
+    private OnItemClickListener itemClickListener;
 
-    public List<VideoInfo> getBigNewses() {
-        return bigNewses;
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     public void setBigNewses(List<VideoInfo> bigNewses) {
@@ -31,14 +33,8 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
     }
 
     private List<VideoInfo> bigNewses;
-    private IPlayerVideoCallBack playerVideoCallBack;
-
 
     public VideoInfoRecyclerAdapter(Context context, List<VideoInfo> bigNewses) {
-
-        if (context instanceof IPlayerVideoCallBack) {
-            playerVideoCallBack = (IPlayerVideoCallBack) context;
-        }
         this.context = context;
         this.bigNewses = bigNewses;
     }
@@ -52,19 +48,23 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         //给itemView绑定数据
         final VideoInfo bigNews = bigNewses.get(position);
         Glide.with(context)
                 .load(bigNews.getCover_pic()).centerCrop()
                 .into(holder.iv);
-        holder.iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
-                playerVideoCallBack.play(url/*bigNews.getUrl()*/);
-            }
-        });
+        if (itemClickListener!=null) {
+            holder.iv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    String url = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
+//                    playerVideoCallBack.play(url/*bigNews.getUrl()*/);
+                    itemClickListener.onItemClick(holder,position);
+                }
+            });
+        }
+
         Glide.with(context)
                 .load(bigNews.getAvatar()).centerCrop()
                 .into(holder.header);
@@ -78,7 +78,7 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
         return bigNewses == null ? 0 : bigNewses.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.cover_pic)
         ImageView iv;
         @Bind(R.id.author)
@@ -92,5 +92,8 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+    interface OnItemClickListener{
+        public void onItemClick(MyViewHolder holder, int position);
     }
 }

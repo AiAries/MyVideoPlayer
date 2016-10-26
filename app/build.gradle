@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "cn.feicui.com.videoplayer"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,4 +37,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'io.reactivex:rxjava:1.2.1'
     compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.google.android.exoplayer:exoplayer:r2.+'
+
+
 }
