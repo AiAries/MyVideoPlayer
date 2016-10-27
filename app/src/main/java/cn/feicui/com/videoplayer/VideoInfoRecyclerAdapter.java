@@ -54,13 +54,13 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
         Glide.with(context)
                 .load(bigNews.getCover_pic()).centerCrop()
                 .into(holder.iv);
-        if (itemClickListener!=null) {
+        if (itemClickListener != null) {
             holder.iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 //                    String url = "http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8";
 //                    playerVideoCallBack.play(url/*bigNews.getUrl()*/);
-                    itemClickListener.onItemClick(holder,position);
+                    itemClickListener.onItemClick(holder, position);
                 }
             });
         }
@@ -78,7 +78,7 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
         return bigNewses == null ? 0 : bigNewses.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.cover_pic)
         ImageView iv;
         @Bind(R.id.author)
@@ -93,7 +93,8 @@ public class VideoInfoRecyclerAdapter extends RecyclerView.Adapter<VideoInfoRecy
             ButterKnife.bind(this, itemView);
         }
     }
-    interface OnItemClickListener{
+
+    public interface OnItemClickListener {
         public void onItemClick(MyViewHolder holder, int position);
     }
 }

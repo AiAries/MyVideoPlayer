@@ -43,8 +43,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.feicui.com.videoplayer.anotation.ViewInjectProxy;
+import cn.feicui.com.videoplayer.base.OkHttpUtil;
 import cn.feicui.com.videoplayer.data.VideoInfo;
-import cn.feicui.com.videoplayer.http.OkHttpUtil;
 
 public class MainActivity extends AppCompatActivity
         implements SwipeRefreshLayout.OnRefreshListener, IPlayerVideoCallBack {
