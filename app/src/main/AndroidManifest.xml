@@ -18,7 +18,7 @@
         <activity android:name=".ExoPlayer.SequencePlayVideoActivity"></activity>
         <activity android:name=".retrofit.RetrofitMainActivity">
         </activity>
-        <activity android:name=".rx.RetrofitAndRxMainActivity">
+        <activity android:name=".retrofitRx.RetrofitAndRxMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

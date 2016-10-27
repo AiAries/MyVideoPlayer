@@ -1,4 +1,4 @@
-package cn.feicui.com.videoplayer.rx;
+package cn.feicui.com.videoplayer.retrofitRx;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

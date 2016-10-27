@@ -1,4 +1,4 @@
-package cn.feicui.com.videoplayer.rx;
+package cn.feicui.com.videoplayer.retrofitRx;
 
 import android.net.Uri;
 import android.os.Bundle;
