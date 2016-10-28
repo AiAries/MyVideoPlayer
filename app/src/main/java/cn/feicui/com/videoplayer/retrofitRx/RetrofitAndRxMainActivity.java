@@ -39,6 +39,10 @@ import cn.feicui.com.videoplayer.R;
 import cn.feicui.com.videoplayer.VideoInfoRecyclerAdapter;
 import cn.feicui.com.videoplayer.anotation.ViewInjectProxy;
 import cn.feicui.com.videoplayer.data.VideoInfo;
+import cn.feicui.com.videoplayer.data.source.VideoInfoRepository;
+import cn.feicui.com.videoplayer.data.source.local.VideoInfoLocalDataSource;
+import cn.feicui.com.videoplayer.data.source.remote.VideoInfoRemoteDataSource;
+import cn.feicui.com.videoplayer.util.schedulers.SchedulerProvider;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -91,30 +95,38 @@ public class RetrofitAndRxMainActivity extends AppCompatActivity implements IPla
     }
 
     private void asyncLoadData(String id) {
-        Observable<List<VideoInfo>> observable = BombClient.getsInstance().getVideoInfoApi().getVideoInfos(id);
-
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new Action1<List<VideoInfo>>() {
-                            @Override
-                            public void call(List<VideoInfo> videoInfos) {
-                                adapter.setBigNewses(videoInfos);
-                                adapter.notifyDataSetChanged();
-                                //刷新数据后，默认播放第一条视频，从服务获取路径有问题
+        VideoInfoRemoteDataSource mRemoteVideoInfoSource = VideoInfoRemoteDataSource.getInstance();
+        mRemoteVideoInfoSource.setId(id);
+        VideoInfoLocalDataSource mLocalVideoInfoSource = VideoInfoLocalDataSource.getInstance(this, SchedulerProvider.getInstance());
+        VideoInfoRepository repository = VideoInfoRepository.getInstance(
+                mLocalVideoInfoSource,
+                mRemoteVideoInfoSource
+        );
+        repository.refreshVideoInfos();//第一次进来强制刷新数据
+        Observable<List<VideoInfo>> observable =
+                repository.getVideoInfos();
+    observable.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    new Action1<List<VideoInfo>>() {
+                        @Override
+                        public void call(List<VideoInfo> videoInfos) {
+                            adapter.setBigNewses(videoInfos);
+                            adapter.notifyDataSetChanged();
+                            //刷新数据后，默认播放第一条视频，从服务获取路径有问题
 //                                String url = videoInfos.get(0).getUrl();
-                                //播放视频   url 视频路径
-                                String url = "http://o9ve1mre2.bkt.clouddn.com/raw_%E6%B8%A9%E7%BD%91%E7%94%B7%E5%8D%95%E5%86%B3%E8%B5%9B.mp4";
-                                play(url);
-                            }
-                        },
-                        new Action1<Throwable>() {
-                            @Override
-                            public void call(Throwable throwable) {
-                                Toast.makeText(RetrofitAndRxMainActivity.this, throwable.toString(), Toast.LENGTH_SHORT).show();
-                            }
+                            //播放视频   url 视频路径
+                            String url = "http://o9ve1mre2.bkt.clouddn.com/raw_%E6%B8%A9%E7%BD%91%E7%94%B7%E5%8D%95%E5%86%B3%E8%B5%9B.mp4";
+                            play(url);
                         }
-                );
+                    },
+                    new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            Toast.makeText(RetrofitAndRxMainActivity.this, throwable.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );
     }
 
     private void initExoPlayer() {

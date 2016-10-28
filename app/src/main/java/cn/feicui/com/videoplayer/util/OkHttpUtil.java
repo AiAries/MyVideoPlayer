@@ -1,4 +1,4 @@
-package cn.feicui.com.videoplayer.base;
+package cn.feicui.com.videoplayer.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

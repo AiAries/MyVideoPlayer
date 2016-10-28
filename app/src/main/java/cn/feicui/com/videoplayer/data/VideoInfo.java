@@ -24,17 +24,6 @@ public class VideoInfo {
         this.likes_count = likes_count;
     }
 
-    public VideoInfo(String id, String url, String cover_pic, String screen_name, String caption, String avatar, int plays_count, int comments_count) {
-        this.id = id;
-        this.url = url;
-        this.cover_pic = cover_pic;
-        this.screen_name = screen_name;
-        this.caption = caption;
-        this.avatar = avatar;
-        this.plays_count = plays_count;
-        this.comments_count = comments_count;
-    }
-
     public String getId() {
         return id;
     }

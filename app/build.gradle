@@ -41,6 +41,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.google.android.exoplayer:exoplayer:r2.+'
+    compile "com.squareup.sqlbrite:sqlbrite:$rootProject.sqlbriteVersion"
 
 
 }

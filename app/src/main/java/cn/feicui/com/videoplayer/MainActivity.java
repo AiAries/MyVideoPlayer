@@ -43,7 +43,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.feicui.com.videoplayer.anotation.ViewInjectProxy;
-import cn.feicui.com.videoplayer.base.OkHttpUtil;
+import cn.feicui.com.videoplayer.util.OkHttpUtil;
 import cn.feicui.com.videoplayer.data.VideoInfo;
 
 public class MainActivity extends AppCompatActivity

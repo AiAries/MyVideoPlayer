@@ -67,7 +67,7 @@ public class SequencePlayVideoActivity extends AppCompatActivity {
                 extractorsFactory,
                 null, null );
         MediaSource secondSource = new ExtractorMediaSource(
-                Uri.parse(VideoURL.url1),
+                Uri.parse(VideoURL.url),
                 dataSourceFactory,
                 extractorsFactory,
                 null, null
