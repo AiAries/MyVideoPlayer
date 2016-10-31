@@ -12,7 +12,7 @@ import rx.Observable;
  */
 
 public class VideoInfoRemoteDataSource implements VideoInfoDataSource {
-    private  String id;
+    private  String type;
 
     private static VideoInfoRemoteDataSource  videoInfoRemoteDataSource;
 
@@ -25,17 +25,17 @@ public class VideoInfoRemoteDataSource implements VideoInfoDataSource {
         return videoInfoRemoteDataSource;
     }
 
-    public String getId() {
-        return id;
+    public String getType() {
+        return type;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
     public Observable<List<VideoInfo>> getVideoInfos() {
-        return BombClient.getsInstance().getVideoInfoApi().getVideoInfos(id);
+        return BombClient.getsInstance().getVideoInfoApi().getVideoInfos(type);
     }
 
     @Override

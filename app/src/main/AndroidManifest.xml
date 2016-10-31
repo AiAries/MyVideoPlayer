@@ -14,7 +14,6 @@
 
         </activity>
         <activity android:name=".ExoPlayer.SimpleExoPlayerDemoActivity"></activity>
-        <activity android:name=".vitamio.VitamioViedeoViewActivity"></activity>
         <activity android:name=".ExoPlayer.SequencePlayVideoActivity"></activity>
         <activity android:name=".retrofit.RetrofitMainActivity">
         </activity>

@@ -61,6 +61,9 @@ public class RetrofitAndRxMainActivity extends AppCompatActivity implements IPla
     private MediaSource videoSource;
     private SimpleExoPlayer player;
     private DefaultBandwidthMeter bandwidthMeter;
+    private VideoInfoRepository repository;
+    private VideoInfoRemoteDataSource mRemoteVideoInfoSource;
+    private VideoInfoLocalDataSource mLocalVideoInfoSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,20 +92,21 @@ public class RetrofitAndRxMainActivity extends AppCompatActivity implements IPla
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //给图片设置的点击事件
         }
-
-        //默认进入当前页面时，加载数据
-        asyncLoadData("3");
-    }
-
-    private void asyncLoadData(String id) {
-        VideoInfoRemoteDataSource mRemoteVideoInfoSource = VideoInfoRemoteDataSource.getInstance();
-        mRemoteVideoInfoSource.setId(id);
-        VideoInfoLocalDataSource mLocalVideoInfoSource = VideoInfoLocalDataSource.getInstance(this, SchedulerProvider.getInstance());
-        VideoInfoRepository repository = VideoInfoRepository.getInstance(
+        mRemoteVideoInfoSource = VideoInfoRemoteDataSource.getInstance();
+        mLocalVideoInfoSource = VideoInfoLocalDataSource.getInstance(this,
+                SchedulerProvider.getInstance());
+        repository = VideoInfoRepository.getInstance(
                 mLocalVideoInfoSource,
                 mRemoteVideoInfoSource
         );
         repository.refreshVideoInfos();//第一次进来强制刷新数据
+        //默认进入当前页面时，加载数据
+        asyncLoadData("3");
+    }
+
+    private void asyncLoadData(String type) {
+        mRemoteVideoInfoSource.setType(type);
+        mLocalVideoInfoSource.setType(type);
         Observable<List<VideoInfo>> observable =
                 repository.getVideoInfos();
     observable.subscribeOn(Schedulers.io())

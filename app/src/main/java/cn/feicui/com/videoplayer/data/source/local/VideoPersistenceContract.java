@@ -36,5 +36,6 @@ public final class VideoPersistenceContract {
         public static final String COLUMN_NAME_AVATAR = "avatar";
         public static final String COLUMN_NAME_CAPTION = "caption";
         public static final String COLUMN_NAME_NAME = "name";
+        public static final String COLUMN_NAME_VIDEO_TYPE = "type";
     }
 }

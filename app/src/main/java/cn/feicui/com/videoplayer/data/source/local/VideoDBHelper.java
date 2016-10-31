@@ -26,6 +26,7 @@ public class VideoDBHelper extends SQLiteOpenHelper {
                     VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_CAPTION + TEXT_TYPE + COMMA_SEP +
                     VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_COVER_PIC + TEXT_TYPE + COMMA_SEP +
                     VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
+                    VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_VIDEO_TYPE + TEXT_TYPE + COMMA_SEP +
                     VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_VIDEO_URL + TEXT_TYPE  +
                     " )";
     public VideoDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {

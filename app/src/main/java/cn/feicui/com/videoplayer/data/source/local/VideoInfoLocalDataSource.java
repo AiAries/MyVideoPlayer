@@ -28,7 +28,13 @@ import static com.google.gson.internal.$Gson$Preconditions.checkNotNull;
 public class VideoInfoLocalDataSource implements VideoInfoDataSource {
     @Nullable
     private static VideoInfoLocalDataSource INSTANCE;
-    private final BriteDatabase mDatabaseHelper;
+    private  final BriteDatabase mDatabaseHelper;
+    private static String type;
+
+    public void setType(String type) {
+        VideoInfoLocalDataSource.type = type;
+    }
+
     /**
      * 把Cusor对象的数据，转化成VideoInfo对象的功能
      */
@@ -63,7 +69,8 @@ public class VideoInfoLocalDataSource implements VideoInfoDataSource {
 
     public static VideoInfoLocalDataSource getInstance(
             @NonNull Context context,
-            @NonNull BaseSchedulerProvider schedulerProvider) {
+            @NonNull BaseSchedulerProvider schedulerProvider
+    ) {
         if (INSTANCE == null) {
             INSTANCE = new VideoInfoLocalDataSource(context, schedulerProvider);
         }
@@ -73,9 +80,9 @@ public class VideoInfoLocalDataSource implements VideoInfoDataSource {
     public static void destroyInstance() {
         INSTANCE = null;
     }
-
     @Override
     public Observable<List<VideoInfo>> getVideoInfos() {
+        checkNotNull(type);
         String[] projection = {
                 VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_ENTRY_ID,
                 VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_AVATAR,
@@ -84,7 +91,13 @@ public class VideoInfoLocalDataSource implements VideoInfoDataSource {
                 VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_NAME,
                 VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_VIDEO_URL
         };
-        String sql = String.format("SELECT %s FROM %s", TextUtils.join(",", projection), VideoPersistenceContract.ViedeoInfoEntry.TABLE_NAME);
+        String sql = String.format(
+                "SELECT %s FROM %s where %s = %s",
+                TextUtils.join(",", projection),
+                VideoPersistenceContract.ViedeoInfoEntry.TABLE_NAME,
+                VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_VIDEO_TYPE,
+                type
+                );
         return mDatabaseHelper.createQuery(VideoPersistenceContract.ViedeoInfoEntry.TABLE_NAME, sql)
                 .mapToList(mVideoInfoMapperFunction);
     }
@@ -98,6 +111,7 @@ public class VideoInfoLocalDataSource implements VideoInfoDataSource {
         values.put(VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_COVER_PIC, videoInfo.getCover_pic());
         values.put(VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_NAME, videoInfo.getScreen_name());
         values.put(VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_VIDEO_URL, videoInfo.getUrl());
+        values.put(VideoPersistenceContract.ViedeoInfoEntry.COLUMN_NAME_VIDEO_TYPE, type);
         mDatabaseHelper.insert(VideoPersistenceContract.ViedeoInfoEntry.TABLE_NAME, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 
