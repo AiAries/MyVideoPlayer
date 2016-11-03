@@ -40,17 +40,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import cn.feicui.com.videoplayer.anotation.GET;
+import cn.feicui.com.videoplayer.anotation.GetProxy;
+import cn.feicui.com.videoplayer.anotation.Query;
+import cn.feicui.com.videoplayer.anotation.ViewInject;
 import cn.feicui.com.videoplayer.anotation.ViewInjectProxy;
-import cn.feicui.com.videoplayer.util.OkHttpUtil;
 import cn.feicui.com.videoplayer.data.VideoInfo;
+import cn.feicui.com.videoplayer.util.OkHttpUtil;
 
 public class MainActivity extends AppCompatActivity
         implements SwipeRefreshLayout.OnRefreshListener, IPlayerVideoCallBack {
 
     private static final String TAG = "Main";
-    @Bind(R.id.exo_player)
+    @ViewInject(R.id.exo_player)
     SimpleExoPlayerView simpleExoPlayerView;
     private String url;
     private List<VideoInfo> data = new ArrayList<>();
@@ -66,7 +68,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
         ViewInjectProxy.bind(this);
         initExoPlayer();
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity
 
         }
         url = "http://newapi.meipai.com/output/channels_topics_timeline.json?id=3";
-        load();
+        load("id");
     }
 
     private void initExoPlayer() {
@@ -150,7 +151,10 @@ public class MainActivity extends AppCompatActivity
         player.prepare(videoSource);
     }
 
-    private void load() {
+    //自己定义的两个注解类，来获取必要的参数
+    @GET("www.baidu.com/api/${id}")
+    private void load(@Query("id") String id) {
+        GetProxy.bind(this);
         loadTask = new LoadTask().execute(url);
     }
 
@@ -185,7 +189,7 @@ public class MainActivity extends AppCompatActivity
                 url = "http://newapi.meipai.com/output/channels_topics_timeline.json?id=13";
                 break;
         }
-        load();
+        load("id");
         return super.onOptionsItemSelected(item);
     }
 
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onRefresh() {
-        load();
+        load("id");
     }
 
     @Override

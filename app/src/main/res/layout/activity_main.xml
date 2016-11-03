@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:type="@+type/activity_main"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="cn.feicui.com.videoplayer.MainActivity">
     <android.support.v7.widget.Toolbar
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:type="@+type/toolBar"
+    android:id="@+id/toolBar"
     android:title="视频播放"
     android:background="@color/colorAccent"
     >
     </android.support.v7.widget.Toolbar>
-    <ScrollView
+    <android.support.v7.widget.ScrollingTabContainerView
+        android:id="@+id/scrollView"
         android:layout_marginTop="48dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,26 +24,19 @@
            android:layout_height="wrap_content">
            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                android:layout_width="match_parent"
-               android:type="@+type/exo_player"
+               android:id="@+id/exo_player"
                android:layout_height="200dp" />
-          <!-- <io.vov.vitamio.widget.VideoView
-               android:type="@+type/videoView"
-               android:layout_width="match_parent"
-               android:layout_height="180dp"
-               />-->
-           <!--<android.support.v4.widget.SwipeRefreshLayout-->
-                   <!--android:type="@+type/sr"-->
-                   <!--android:layout_width="match_parent"-->
-                   <!--android:layout_height="wrap_content">-->
 
-           <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+        <!--   <android.support.v4.widget.SwipeRefreshLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">-->
            <android.support.v7.widget.RecyclerView
                    android:layout_width="match_parent"
                    android:layout_height="match_parent"
-                   android:type="@+type/rv"
+                   android:id="@+id/rv"
                    />
-
+          <!-- </android.support.v4.widget.SwipeRefreshLayout>-->
        </LinearLayout>
-    </ScrollView>
+    </android.support.v7.widget.ScrollingTabContainerView>
 
 </RelativeLayout>

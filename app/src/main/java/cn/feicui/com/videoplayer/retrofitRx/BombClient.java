@@ -45,6 +45,7 @@ public class BombClient {
                 .client(okHttpClient)
                         // bomb服务器baseurl
                 .baseUrl("http://newapi.meipai.com/")
+                //添加这个Call适配器是为了配合Rxjava来使用
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                         // Gson转换器
                 .addConverterFactory(GsonConverterFactory.create(gson))

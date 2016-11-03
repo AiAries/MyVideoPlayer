@@ -11,7 +11,7 @@
        android:layout_weight="1"
        android:layout_height="wrap_content">
        <ImageView
-           android:type="@+type/cover_pic"
+           android:id="@+id/cover_pic"
            android:layout_width="match_parent"
            android:layout_height="100dp"
            android:background="@drawable/btn_bordless_mtrl"
@@ -28,13 +28,13 @@
            android:orientation="horizontal">
 
            <ImageView
-               android:type="@+type/header"
+               android:id="@+id/header"
                android:layout_width="40dp"
                android:layout_height="40dp"
                android:scaleType="centerCrop" />
 
            <TextView
-               android:type="@+type/author"
+               android:id="@+id/author"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginLeft="16dp"
@@ -46,7 +46,7 @@
        </LinearLayout>
 
        <TextView
-           android:type="@+type/video_intro"
+           android:id="@+id/video_intro"
            android:layout_width="match_parent"
            android:gravity="center_vertical"
            android:layout_height="wrap_content"
